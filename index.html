@@ -76,9 +76,11 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-      background: #ffffff;
+      /* Background color zaroori hai warna fixed div ke peeche white dikhega */
+      background: #f0f0f0; 
       color: #000;
       font-family: 'Arial', sans-serif;
+      /* Body ke content ko center karne ki zarurat nahi hai ab */
     }
     input, textarea {
       background: #f9f9f9;
@@ -97,11 +99,24 @@
     .btn:hover {
       background: #333;
     }
+
+    /* Yeh naya style hai jo tera div center mein fix karega */
+    .center-fixed {
+      position: fixed; /* Yeh property element ko flow se nikal kar fixed kar deti hai */
+      top: 50%;
+      left: 50%;
+      /* Top aur left ko 50% karne se div ka top-left corner center mein aa jata hai */
+      transform: translate(-50%, -50%); /* Isse div ko perfectly center mein laya ja sakta hai */
+      /* Z-index add kiya hai taaki ye sabse upar rahe agar koi aur content ho toh */
+      z-index: 10; 
+    }
   </style>
 </head>
 
-<body class="flex items-center justify-center">
-  <div class="w-full max-w-md bg-white p-8 text-center">
+<!-- Body se flex items-center hata diye kyunki ab CSS handle karega -->
+<body>
+  <!-- Yahan ek naya class 'center-fixed' add ki hai -->
+  <div class="w-full max-w-md bg-white p-8 text-center center-fixed shadow-xl rounded-lg">
     <h1 class="text-3xl font-bold mb-3">Airobot ~ Satya</h1>
     <p class="text-gray-500 mb-8 text-sm">Send a live display message to me hehehe</p>
 
