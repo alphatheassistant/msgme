@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Msg Me</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: #fff4f7;
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+    }
+    .card {
+      background: #fff;
+      border-radius: 1.5rem;
+      box-shadow: 0 4px 20px rgba(255, 182, 193, 0.3);
+    }
+    input, textarea {
+      border: 2px solid #ffdce1;
+      transition: 0.2s;
+    }
+    input:focus, textarea:focus {
+      border-color: #ff7aa2;
+      outline: none;
+      background: #fffafc;
+    }
+    .btn {
+      background: #ff8fb1;
+      color: white;
+      border-radius: 9999px;
+      transition: 0.2s;
+    }
+    .btn:hover {
+      background: #ff709c;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center">
+  <div class="card w-full max-w-md p-8 text-center">
+    <h1 class="text-3xl font-bold mb-2">Msg ME</h1>
+    <p class="text-pink-500 mb-6 text-sm">Okay now send a live message hehehe!</p>
+
+    <form id="msgForm" class="space-y-4">
+      <input id="name" type="text" placeholder="Your Name" class="w-full p-3 rounded-full" required />
+      <textarea id="message" rows="3" placeholder="Type your message..." class="w-full p-3 rounded-2xl" required></textarea>
+      <button type="submit" class="btn w-full p-3 font-semibold">Send :)</button>
+    </form>
+
+    <div id="status" class="mt-4 text-sm text-pink-600"></div>
+  </div>
+
+  <script>
+    const form=document.getElementById('msgForm'),status=document.getElementById('status');
+    form.addEventListener('submit',async e=>{
+      e.preventDefault();
+      const name=document.getElementById('name').value.trim();
+      const message=document.getElementById('message').value.trim();
+      status.textContent="Sending...";
+      const query=new URLSearchParams({name,message}).toString();
+      const res=await fetch(`https://api-point-search.vercel.app/sendmsg?${query}`,{method:"POST"});
+      const data=await res.json();
+      status.textContent=data.success?"✅ Message sent!":"❌ Failed!";
+      if(data.success)form.reset();
+    });
+  </script>
+</body>
+</html>
