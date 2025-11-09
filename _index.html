@@ -1,0 +1,167 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Msg Me</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: #fff4f7;
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+    }
+    .card {
+      background: #fff;
+      border-radius: 1.5rem;
+      box-shadow: 0 4px 20px rgba(255, 182, 193, 0.3);
+    }
+    input, textarea {
+      border: 2px solid #ffdce1;
+      transition: 0.2s;
+    }
+    input:focus, textarea:focus {
+      border-color: #ff7aa2;
+      outline: none;
+      background: #fffafc;
+    }
+    .btn {
+      background: #ff8fb1;
+      color: white;
+      border-radius: 9999px;
+      transition: 0.2s;
+    }
+    .btn:hover {
+      background: #ff709c;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center">
+  <div class="card w-full max-w-md p-8 text-center">
+    <h1 class="text-3xl font-bold mb-2">Msg ME</h1>
+    <p class="text-pink-500 mb-6 text-sm">Okay now send a live message hehehe!</p>
+
+    <form id="msgForm" class="space-y-4">
+      <input id="name" type="text" placeholder="Your Name" class="w-full p-3 rounded-full" required />
+      <textarea id="message" rows="3" placeholder="Type your message..." class="w-full p-3 rounded-2xl" required></textarea>
+      <button type="submit" class="btn w-full p-3 font-semibold">Send :)</button>
+    </form>
+
+    <div id="status" class="mt-4 text-sm text-pink-600"></div>
+  </div>
+
+  <script>
+    const form=document.getElementById('msgForm'),status=document.getElementById('status');
+    form.addEventListener('submit',async e=>{
+      e.preventDefault();
+      const name=document.getElementById('name').value.trim();
+      const message=document.getElementById('message').value.trim();
+      status.textContent="Sending...";
+      const query=new URLSearchParams({name,message}).toString();
+      const res=await fetch(`https://api-point-search.vercel.app/sendmsg?${query}`,{method:"POST"});
+      const data=await res.json();
+      status.textContent=data.success?"✅ Message sent!":"❌ Failed!";
+      if(data.success)form.reset();
+    });
+  </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Airobot ~ Satya</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      /* Background color zaroori hai warna fixed div ke peeche white dikhega */
+      color: #000;
+      font-family: 'Arial', sans-serif;
+      /* Body ke content ko center karne ki zarurat nahi hai ab */
+    }
+    input, textarea {
+      background: #f9f9f9;
+      border: 1px solid #ccc;
+      transition: border 0.2s;
+    }
+    input:focus, textarea:focus {
+      border-color: #000;
+      outline: none;
+    }
+    .btn {
+      background: #000;
+      color: #fff;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #333;
+    }
+
+    /* Yeh naya style hai jo tera div center mein fix karega */
+    .center-fixed {
+      position: fixed; /* Yeh property element ko flow se nikal kar fixed kar deti hai */
+      top: 50%;
+      left: 50%;
+      /* Top aur left ko 50% karne se div ka top-left corner center mein aa jata hai */
+      transform: translate(-50%, -50%); /* Isse div ko perfectly center mein laya ja sakta hai */
+      /* Z-index add kiya hai taaki ye sabse upar rahe agar koi aur content ho toh */
+      z-index: 10; 
+    }
+  </style>
+</head>
+
+<!-- Body se flex items-center hata diye kyunki ab CSS handle karega -->
+<body>
+  <!-- Yahan ek naya class 'center-fixed' add ki hai -->
+  <div class="w-full max-w-md bg-white p-8 text-center center-fixed rounded-lg">
+    <h1 class="text-3xl font-bold mb-3">Airobot ~ Satya</h1>
+    <p class="text-gray-500 mb-8 text-sm">Send a live display message to me hehehe</p>
+
+    <form id="msgForm" class="space-y-4">
+      <input id="name" type="text" placeholder="Your Name" class="w-full p-3" required />
+      <textarea id="message" rows="3" placeholder="Type your message..." class="w-full p-3" required></textarea>
+      <button type="submit" class="btn w-full p-3 font-semibold">Send Message :)</button>
+    </form>
+
+    <div id="status" class="mt-6 text-sm h-6 text-gray-600"></div>
+
+  </div>
+
+  <script>
+    const form = document.getElementById('msgForm');
+    const status = document.getElementById('status');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const message = document.getElementById('message').value.trim();
+      if (!name || !message) return;
+
+      status.textContent = "Sending...";
+      try {
+        const query = new URLSearchParams({
+          name: name,
+          message: message
+        }).toString();
+
+        const endpoint = `https://api-point-search.vercel.app/sendmsg?${query}`;
+
+        const res = await fetch(endpoint, { method: "POST" });
+        const data = await res.json();
+
+        if (data.success) {
+          status.textContent = "✅ Message sent successfully!";
+          form.reset();
+        } else {
+          status.textContent = "❌ Failed to send message.";
+        }
+      } catch (err) {
+        console.error(err);
+        status.textContent = "⚠️ Connection error.";
+      }
+    });
+  </script>
+</body>
+</html>
