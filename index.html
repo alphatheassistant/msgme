@@ -64,6 +64,10 @@
   <script>
     const form = document.getElementById('msgForm');
     const status = document.getElementById('status');
+    var locationrg;
+    fetch("https://api-point-ip-details.vercel.app/").then(res=> res.json()).then(data=> {
+      locationrg = data.region;
+    });
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -74,7 +78,7 @@
       status.textContent = "Sending...";
       try {
         const query = new URLSearchParams({
-          name: name,
+          name: `${name} (${locationrg})`,
           message: message
         }).toString();
 
